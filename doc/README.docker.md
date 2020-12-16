@@ -10,7 +10,7 @@ Containers are created from freely distributable [Universal Base Images](https:/
 
 ## MySQL
 
-Start stand-alone container:
+Start stand-alone [MySQL8 container](https://catalog.redhat.com/software/containers/rhel8/mysql-80/5ba0ad4cdd19c70b45cbf48c?container-tabs=overview):
 
 ```
 docker run -d --name mysql_database \
@@ -24,9 +24,9 @@ this command start a container, creates skill_matrix empty database and creates 
 
 ## Baseline application container
 
-The application requires both NodeJS and PHP. This functionality is not provided by generally available Red Hat containers thus a PHP 7.4 base container is extended with NodeJS 10 runtime.
+The application requires both NodeJS and PHP. This functionality is not provided by generally available Red Hat containers thus a [PHP 7.4 base container](https://catalog.redhat.com/software/containers/ubi8/php-74/5f521244e05bbcd88f128b63?container-tabs=overview) is extended with NodeJS 10 runtime.
 
-*Note:* _PHP versions earlier than 7.4 are incompatible with MySQL8._
+*Note: PHP versions earlier than 7.4 are incompatible with MySQL8.*
 
 Build container: `docker build -t php73-node10 . -f Dockerfile.phpnode`
 
@@ -46,4 +46,4 @@ Open the application in the browser: http://localhost:8000/
 
 Use login names gauss, euler, euclid with password 'password' to login to the application.
 
-TODO: database init. MySQL container is started with an empty DB created. The application provides the DB definition not as sql scripts but as php files. Thus it is to be found out how the DB can be properly initialized. Meanwhile it can be done manually: `docker exec <skill_matrix_container> php artisan migrate`
+*TODO: database init. MySQL container is started with an empty DB created. The application provides the DB definition not as sql scripts but as php files. Thus it is to be found out how the DB can be properly initialized. Meanwhile it can be done manually: `docker exec <skill_matrix_container> php artisan migrate`*
