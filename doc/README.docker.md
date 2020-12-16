@@ -28,7 +28,7 @@ this command start a container, creates skill_matrix empty database and creates 
 
 The application requires both NodeJS and PHP. This functionality is not provided by generally available Red Hat containers thus a PHP 7.4 baseline container is extended with NodeJS 10 runtime.
 
-Note: PHP versions earlier than 7.4 are incompatible with MySQL8.
+*Note:* _PHP versions earlier than 7.4 are incompatible with MySQL8._
 
 Build container: `docker build -t php73-node10 . -f Dockerfile.phpnode`
 
