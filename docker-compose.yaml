@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: registry.redhat.io/rhel8/mysql-80
+    environment:
+      MYSQL_DATABASE: skill_matrix
+      MYSQL_USER: skill_matrix
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+  app:
+    image: skill_matrix
+    container_name: skill_matrix
+    depends_on:
+      - db
+    volumes:
+      - ./.env.docker:/opt/app-root/src/.env
+    ports:
+      - "8000:8000"
+    stdin_open: true
+    tty: true
