@@ -1,14 +1,12 @@
 # Overview
-Skill Matrix is an application combining Apache, PHP, NodeJS and MySQL technologies. It is distributed as a traditional application running on a host with the installed stack of technologies.
+[Skill Matrix](https://github.com/the-guitarman/skill_matrix) is an application combining Apache, PHP, NodeJS and MySQL technologies. It is distributed as a traditional application running on a host with the installed stack of technologies.
 This document describes a method how it can be packaged in containers and executed locally for testing purposes. Those containers can be deployed on Kubernetes platforms like Openshift or Amazon EKS.
 
 The document assumes that container tools like Docker are installed.
 
-
-
 # Containers
 
-Containers are created from freely distributable Universal Baseline Images (UBI8) certified to run on Openshift.
+Containers are created from freely distributable [Universal Base Images](https://developers.redhat.com/blog/2020/03/24/red-hat-universal-base-images-for-docker-users/) (UBI8) certified to run on Openshift.
 
 ## MySQL
 
@@ -26,7 +24,7 @@ this command start a container, creates skill_matrix empty database and creates 
 
 ## Baseline application container
 
-The application requires both NodeJS and PHP. This functionality is not provided by generally available Red Hat containers thus a PHP 7.4 baseline container is extended with NodeJS 10 runtime.
+The application requires both NodeJS and PHP. This functionality is not provided by generally available Red Hat containers thus a PHP 7.4 base container is extended with NodeJS 10 runtime.
 
 *Note:* _PHP versions earlier than 7.4 are incompatible with MySQL8._
 
