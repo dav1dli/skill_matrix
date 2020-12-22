@@ -34,6 +34,12 @@ Build container: `docker build -t php73-node10 . -f Dockerfile.phpnode`
 
 Build container: `docker build -t skill-matrix .`
 
+Publish to docker.io/dav1dli/skill-matrix repository:
+```
+docker tag skill_matrix dav1dli/skill-matrix
+docer push dav1dli/skill-matrix
+```
+
 # Start/stop
 
 An example docker compose configuration is provided: docker-compose.yaml. It describes both components of the application: db and app with required parameters. Compose scenario is supported by .env.docker application configuration.
