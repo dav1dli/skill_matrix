@@ -1,0 +1,13 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: skill-matrix
+  name: skill-matrix
+  namespace: skill-matrix
+spec:
+  tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: dav1dli/skill-matrix

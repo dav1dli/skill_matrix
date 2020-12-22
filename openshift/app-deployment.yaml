@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skill-matrix
+  namespace: skill-matrix
+  labels:
+    app: skill-matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skill-matrix
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: skill-matrix
+    spec:
+      containers:
+      - name: skill-matrix
+        image: dav1dli/skill-matrix:latest
+        ports:
+          - containerPort: 8000
+            protocol: TCP
+        volumeMounts:
+        - name: skill-matrix-logs-volume
+          mountPath: /opt/app-root/src/storage/logs
+        - name: skill-matrix-cache-volume
+          mountPath: /opt/app-root/src/storage/framework/cache
+        - name: skill-matrix-sessions-volume
+          mountPath: /opt/app-root/src/storage/framework/sessions
+        - name: skill-matrix-views-volume
+          mountPath: /opt/app-root/src/storage/framework/views
+      volumes:
+      - name: skill-matrix-logs-volume
+        persistentVolumeClaim:
+          claimName: skill-matrix-logs
+      - name: skill-matrix-cache-volume
+        emptyDir: {}
+      - name: skill-matrix-sessions-volume
+        emptyDir: {}
+      - name: skill-matrix-views-volume
+        emptyDir: {}

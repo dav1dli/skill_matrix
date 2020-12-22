@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: skill-matrix
+  name: db
+  namespace: skill-matrix
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: db
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        deployment: db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: skill_matrix
+        - name: MYSQL_PASSWORD
+          value: secret
+        - name: MYSQL_USER
+          value: skill_matrix
+        image: registry.redhat.io/rhel8/mysql-80@sha256:55c08482a20b653dab4d78fad77b5a459e04258135e19fb14efbd1072c786fd3
+        imagePullPolicy: IfNotPresent
+        name: db
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always

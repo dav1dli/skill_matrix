@@ -1,0 +1,17 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: skill-matrix
+  name: db
+  namespace: skill-matrix
+spec:
+  tags:
+  - annotations:
+      openshift.io/imported-from: registry.redhat.io/rhel8/mysql-80
+    from:
+      kind: DockerImage
+      name: registry.redhat.io/rhel8/mysql-80
+    name: latest
+    referencePolicy:
+      type: Source
