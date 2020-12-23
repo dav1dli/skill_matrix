@@ -10,11 +10,6 @@ spec:
   selector:
     matchLabels:
       app: skill-matrix
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -29,27 +24,10 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - >
-                  cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env;
-                  php artisan migrate
+                - cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env; php artisan migrate
         ports:
           - containerPort: 8000
             protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8000
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8000
-        resources:
-          requests:
-            cpu: 100m
-            memory: 32Mi
-          limits:
-            cpu: 200m
-            memory: 64Mi
         volumeMounts:
           - name: skill-matrix-logs-volume
             mountPath: /opt/app-root/src/storage/logs
@@ -62,6 +40,13 @@ spec:
           - name: env-volume
             mountPath: /opt/app-root/src/storage/env
             readOnly: true
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 64Mi
       volumes:
         - name: skill-matrix-logs-volume
           emptyDir: {}
