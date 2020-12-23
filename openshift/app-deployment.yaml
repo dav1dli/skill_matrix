@@ -24,7 +24,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env; php artisan migrate
+                - cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env; php artisan key:generate; php artisan migrate
         ports:
           - containerPort: 8000
             protocol: TCP
