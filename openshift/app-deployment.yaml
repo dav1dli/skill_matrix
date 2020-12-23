@@ -29,32 +29,48 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env
+                - >
+                  cp /opt/app-root/src/storage/env/env.ocp /opt/app-root/src/.env;
+                  php artisan migrate
         ports:
           - containerPort: 8000
             protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 64Mi
         volumeMounts:
-        - name: skill-matrix-logs-volume
-          mountPath: /opt/app-root/src/storage/logs
-        - name: skill-matrix-cache-volume
-          mountPath: /opt/app-root/src/storage/framework/cache
-        - name: skill-matrix-sessions-volume
-          mountPath: /opt/app-root/src/storage/framework/sessions
-        - name: skill-matrix-views-volume
-          mountPath: /opt/app-root/src/storage/framework/views
-        - name: env-volume
-          mountPath: /opt/app-root/src/storage/env
-          readOnly: true
+          - name: skill-matrix-logs-volume
+            mountPath: /opt/app-root/src/storage/logs
+          - name: skill-matrix-cache-volume
+            mountPath: /opt/app-root/src/storage/framework/cache
+          - name: skill-matrix-sessions-volume
+            mountPath: /opt/app-root/src/storage/framework/sessions
+          - name: skill-matrix-views-volume
+            mountPath: /opt/app-root/src/storage/framework/views
+          - name: env-volume
+            mountPath: /opt/app-root/src/storage/env
+            readOnly: true
       volumes:
-      - name: skill-matrix-logs-volume
-        persistentVolumeClaim:
-          claimName: skill-matrix-logs
-      - name: skill-matrix-cache-volume
-        emptyDir: {}
-      - name: skill-matrix-sessions-volume
-        emptyDir: {}
-      - name: skill-matrix-views-volume
-        emptyDir: {}
-      - name: env-volume
-        secret:
-          secretName: skill-matrix-env
+        - name: skill-matrix-logs-volume
+          emptyDir: {}
+        - name: skill-matrix-cache-volume
+          emptyDir: {}
+        - name: skill-matrix-sessions-volume
+          emptyDir: {}
+        - name: skill-matrix-views-volume
+          emptyDir: {}
+        - name: env-volume
+          secret:
+            secretName: skill-matrix-env

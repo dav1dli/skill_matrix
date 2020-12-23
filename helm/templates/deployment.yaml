@@ -1,16 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "skill-matrix.fullname" . }}
+  name: skill-matrix
   labels:
-    {{- include "skill-matrix.labels" . | nindent 4 }}
+    app: skill-matrix
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "skill-matrix.selectorLabels" . | nindent 6 }}
+      app: skill-matrix
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       {{- with .Values.podAnnotations }}

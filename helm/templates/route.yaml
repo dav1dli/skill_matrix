@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: skill-matrix
+  namespace: skill-matrix
+  labels:
+    app: skill-matrix
+spec:
+  to:
+    kind: Service
+    name: skill-matrix
+    weight: 100
+  port:
+    targetPort: 8000-tcp

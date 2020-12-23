@@ -31,14 +31,14 @@ The application is configured using *.env* file located in the application root.
 
 Create the application from manifests:
 ```
-create -f openshift/app-env.yaml
-create -f openshift/app-is.yaml
-create -f openshift/app-deployment.yaml
+oc create -f openshift/app-env.yaml
+oc create -f openshift/app-is.yaml
+oc create -f openshift/app-deployment.yaml
 oc create -f openshift/app-service.yaml
 oc create -f openshift/app-route.yaml
 ```
 
-As a result the application is available at http://skill-matrix-<project>.<cluster>/
+As a result the application is available at 'http://skill-matrix-<project>.<cluster>/'
 
 # Helm
 TDB
