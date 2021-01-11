@@ -1,4 +1,4 @@
-FROM php74-node10
+FROM dav1dli/php74-node10
 LABEL name="skill_matrix" \
       vendor="Deutsche Bahn" \
       version="0.1.0" \
