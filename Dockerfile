@@ -21,7 +21,7 @@ RUN chown -R 1001:1 /opt/app-root/src /opt/app-root/src/config/ldap.php /opt/app
 WORKDIR /opt/app-root/src
 USER 1001
 RUN composer install && \
-  npm install && \
+  npm install || echo $? && \
   npm run dev && \
   npm audit fix && \
   php artisan key:generate
