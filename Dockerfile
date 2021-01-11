@@ -10,10 +10,14 @@ LABEL name="skill_matrix" \
       io.openshift.expose-services="8000:http" \
       io.openshift.tags="php,php74,node,node10,skill_matrix" \
       maintainer="david.liderman@deutschebahn.com"
-COPY --chown=1001 . /opt/app-root/src
-COPY --chown=1001 .env.openshift /opt/app-root/src/.env
-COPY --chown=1001 ./config/ldap.php.example /opt/app-root/src/config/ldap.php
+COPY . /opt/app-root/src
+COPY .env.docker /opt/app-root/src/.env
+COPY config/ldap.php.example /opt/app-root/src/config/ldap.php
 COPY httpd-skill-matrix.conf /opt/app-root/etc/conf.d/skill-matrix.conf
+USER 0
+RUN chown -R 1001:1 /opt/app-root/src /opt/app-root/src/config/ldap.php /opt/app-root/etc/conf.d/skill-matrix.conf && \
+    chmod 664 /opt/app-root/src/.env && \
+    chmod 775 /opt/app-root/src /opt/app-root/src/storage
 WORKDIR /opt/app-root/src
 USER 1001
 RUN composer install && \
